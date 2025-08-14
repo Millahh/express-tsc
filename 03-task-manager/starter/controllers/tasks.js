@@ -1,5 +1,7 @@
+const { createCustomError } = require('../errors/custom-error');
 const asyncWrapper = require('../middleware/async')
 const Task = require("../models/Task");
+
 
 const getAllTasks = asyncWrapper(async (req, res) => {
     const tasks = await Task.find({})
@@ -13,13 +15,13 @@ const getAllTasks = asyncWrapper(async (req, res) => {
 
 });
 
-const getATask = asyncWrapper(async (req, res) => {
+const getATask = asyncWrapper(async (req, res, next) => {
     //use .findOne to display collections that has matched _id
     const { id: taskID } = req.params;
     const task = await Task.findOne({ _id: taskID });
     //for special case (_id with the same length of characters but not matching)
     if (!task) {
-      return res.status(404).json({ msg: `No task with id: ${taskID}` });
+      return next(createCustomError(`No task with id: ${taskID}`, 404))
     }
     res.status(200).json({ task });
 });
@@ -34,7 +36,7 @@ const deleteTask = asyncWrapper(async (req, res) => {
     const task = await Task.findOneAndDelete({ _id: taskID });
     //for special case (_id with the same length of characters but not matching)
     if (!task) {
-      return res.status(404).json({ msg: `No task with id: ${taskID}` });
+      return next(createCustomError(`No task with id: ${taskID}`, 404))
     }
     res.status(200).json({ task });
 });
@@ -48,7 +50,7 @@ const updateTask = asyncWrapper(async (req, res) => {
     });
     //for special case (_id with the same length of characters but not matching)
     if (!task) {
-      return res.status(404).json({ msg: `No task with id: ${taskID}` });
+      return next(createCustomError(`No task with id: ${taskID}`, 404))
     }
     res.status(200).json({ task });
 });
