@@ -1,11 +1,13 @@
 const Product = require("../models/product");
 
 const getAllProductsStatic = async (req, res) => {
-  const search = 'a'
-//  const products = await Product.find({}).sort('name') // sort by name
-//  const products = await Product.find({}).sort('-name' price) // desc sort by name, and asc by price
+  const search = "a";
+  //  const products = await Product.find({}).sort('name') // sort by name
+  //  const products = await Product.find({}).sort('-name price') // desc sort by name, and asc by price
+  //  const products = await Product.find({}).select('name price') // to show the certain field only
+  //  const products = await Product.find({}).select('name price').limit(20).skip(5) // add limit of the response data
   const products = await Product.find({
-    name: { $regex:search, $options:'i'}
+    name: { $regex: search, $options: "i" },
     // $regex = in this case, %value%
     // $options: 'i' = case INsensitive
   }); // for specific output, type ({ any_property: value}). exm: name:'millah'
@@ -14,7 +16,7 @@ const getAllProductsStatic = async (req, res) => {
   // throw new Error('testing async errors')
 };
 const getAllProducts = async (req, res) => {
-  const { featured, company, name, sort } = req.query;
+  const { featured, company, name, sort, fields } = req.query;
   const queryObject = {};
 
   if (featured) {
@@ -24,18 +26,31 @@ const getAllProducts = async (req, res) => {
     queryObject.company = company;
   }
   if (name) {
-    queryObject.name = { $regex:search, $options:'i'};
+    queryObject.name = { $regex: search, $options: "i" };
   }
 
   let result = Product.find(queryObject);
-   if(sort){
-    // change the url to -> .sort('-name' price)
-    const sortList = sort.split(',').join(' ')
-    result = result.sort(sortList)
-   }else{
-    result = result.sort('createdAt')
-   }
-   const products = await result
+  // sort
+  if (sort) {
+    // change the url to -> .sort('-name price')
+    const sortList = sort.split(",").join(" ");
+    result = result.sort(sortList);
+  } else {
+    result = result.sort("createdAt");
+  }
+
+  // selected fields
+  if (fields) {
+    const fieldsList = fields.split(",").join(" ");
+    result = result.select(fieldsList);
+  }
+  const products = await result;
+
+  const page = Number(req.query.page) || 1;
+  const limit = Number(req.query.limit) || 10;
+  const skip = (page - 1) * limit;
+  result = result.skip(skip).limit(limit)
+ 
   res.status(200).json({ products, nbHits: products.length });
 };
 
