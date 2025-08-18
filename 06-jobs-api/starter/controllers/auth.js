@@ -20,7 +20,7 @@ const login = async (req, res) => {
   }
 
   const isPasswordCorrect = await user.comparePassword(password);
-  // keep this in mind: user is a registered user, and User is a model named User
+  // keep this in mind: user and User are different
   if (!isPasswordCorrect) {
     throw new UnauthenticatedError("Invalid Credentials");
   }
