@@ -28,9 +28,16 @@ const UserSchema = new mongoose.Schema({
 // whenever a new user is about tot be saved, we tell it to do the extra step before using .pre
 // this good to keep controllers clean
 UserSchema.pre("save", async function (next) {
-  const salt = await bcrypt.genSalt(10)
-  this.password = await bcrypt.hash(this.password, salt)
-  next()
-})
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+  next();
+});
+// define functions that belong to each document (like methods in a class)
+// createJWT is not a reserved name
+UserSchema.methods.createJWT = function () {
+  return jwt({ userId: this._id, name: this.name }, "jwtSecret", {
+    expiresIn: "30d",
+  });
+};
 
 module.exports = mongoose.model("User", UserSchema);
