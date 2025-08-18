@@ -26,6 +26,7 @@
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
     "nodemon": "^2.0.9"
   }
 }

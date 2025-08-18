@@ -20,7 +20,8 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please provide password"],
     minlength: 6,
-    maxlength: 12,
+    // hash password is do greater than 12, so better just remove the maxlength
+    // maxlength: 12,
   },
 });
 
