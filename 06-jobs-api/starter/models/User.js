@@ -35,8 +35,8 @@ UserSchema.pre("save", async function (next) {
 // define functions that belong to each document (like methods in a class)
 // createJWT is not a reserved name
 UserSchema.methods.createJWT = function () {
-  return jwt({ userId: this._id, name: this.name }, "jwtSecret", {
-    expiresIn: "30d",
+  return jwt.sign({ userId: this._id, name: this.name }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_LIFETIME,
   });
 };
 
