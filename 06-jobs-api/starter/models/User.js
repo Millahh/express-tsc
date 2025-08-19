@@ -29,7 +29,6 @@ const UserSchema = new mongoose.Schema({
 // whenever a new user is about tot be saved, we tell it to do the extra step before using .pre
 // this good to keep controllers clean
 UserSchema.pre("save", async function (next) {
-  console.log('test')
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
   next();
