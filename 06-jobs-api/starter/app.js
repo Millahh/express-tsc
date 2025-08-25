@@ -5,7 +5,7 @@ const app = express();
 // extra security packages
 const helmet = require('helmet')
 const cors = require('cors')
-const xss = require('xxs-clean')
+const xss = require('xss-clean')
 const rateLimiter = require('express-rate-limit')
 
 // connectDB
@@ -19,7 +19,6 @@ const jobsRouter = require('./routes/jobs')
 // error handler
 const notFoundMiddleware = require('./middleware/not-found');
 const errorHandlerMiddleware = require('./middleware/error-handler');
-const helmet = require('helmet');
 
 // extra security
 app.set('trust proxy', 1)
