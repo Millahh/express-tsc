@@ -4,11 +4,14 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <!-- favicon -->
     <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
+
     <!-- normalize -->
     <link rel="stylesheet" href="./normalize.css" />
-    <!-- main  -->
+
+    <!-- main -->
     <link rel="stylesheet" href="./main.css" />
 
     <title>Edit Task</title>
@@ -16,24 +19,34 @@
   <body>
     <div class="container">
       <form class="single-task-form">
-        <h4>Edit Task</h4>
+        <h2 class="form-title">Edit Task</h2>
+
         <div class="form-control">
           <label>Task ID</label>
           <p class="task-edit-id"></p>
         </div>
+
         <div class="form-control">
           <label for="name">Name</label>
           <input type="text" name="name" class="task-edit-name" />
         </div>
-        <div class="form-control">
-          <label for="completed">completed</label>
-          <input type="checkbox" name="completed" class="task-edit-completed" />
+
+        <div class="form-control checkbox-control">
+          <label for="completed">Completed</label>
+          <input
+            type="checkbox"
+            name="completed"
+            class="task-edit-completed"
+          />
         </div>
-        <button type="submit" class="block btn task-edit-btn">edit</button>
-        <div class="form-alert"></div>
+
+        <button type="submit" class="btn block task-edit-btn">Save Changes</button>
+        <p class="form-alert"></p>
       </form>
-      <a href="index.html" class="btn back-link">back to tasks</a>
+
+      <a href="index.html" class="btn back-link">← Back to tasks</a>
     </div>
+
     <!-- axios -->
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
@@ -41,6 +54,7 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
+
     <!-- js -->
     <script src="./edit-task.js"></script>
   </body>
