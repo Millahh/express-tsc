@@ -215,6 +215,7 @@ textarea:focus {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  font-size: 1rem;
 }
 
 .single-task .fa-check-circle {
