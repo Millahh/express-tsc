@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>📦 Store API Explorer</title>
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
   <header>
     <h1>📦 Store API Explorer</h1>
@@ -34,25 +36,32 @@
         <label for="featured">Featured</label>
         <select id="featured">
           <option value="">Any</option>
-          <option value="true">Yes</option>
-          <option value="false">No</option>
+          <option value="true">Show on Website</option>
+          <option value="false">Hide from Website</option>
         </select>
       </div>
 
       <div class="form-group">
-        <label for="sort">Sort</label>
-        <input type="text" id="sort" placeholder="e.g. price,-name" />
+        <label for="sort">Sort by</label>
+        <select id="sort">
+          <option value="">Default (Newest)</option>
+          <option value="price">Price: Low → High</option>
+          <option value="-price">Price: High → Low</option>
+          <option value="name">Name: A → Z</option>
+          <option value="-name">Name: Z → A</option>
+          <option value="rating">Rating: Low → High</option>
+          <option value="-rating">Rating: High → Low</option>
+        </select>
       </div>
 
       <div class="form-group">
-        <label for="fields">Fields</label>
-        <input type="text" id="fields" placeholder="e.g. name,price" />
+        <label for="numericFilters">Price Filter</label>
+        <div class="range-inputs">
+          <input type="number" id="priceMin" placeholder="Min Price" />
+          <input type="number" id="priceMax" placeholder="Max Price" />
+        </div>
       </div>
 
-      <div class="form-group">
-        <label for="numericFilters">Numeric Filters</label>
-        <input type="text" id="numericFilters" placeholder="price>40,rating>=4" />
-      </div>
 
       <div class="form-inline">
         <label for="limit">Limit</label>
@@ -80,4 +89,5 @@
 
   <script src="script.js"></script>
 </body>
+
 </html>

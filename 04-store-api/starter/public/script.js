@@ -12,17 +12,24 @@ function buildParams(page = 1) {
   const company = document.getElementById("company").value;
   const featured = document.getElementById("featured").value;
   const sort = document.getElementById("sort").value.trim();
-  const fields = document.getElementById("fields").value.trim();
-  const numericFilters = document.getElementById("numericFilters").value.trim();
+  const priceMin = document.getElementById("priceMin").value.trim();
+  const priceMax = document.getElementById("priceMax").value.trim();
   const limit = limitEl.value;
 
   const params = new URLSearchParams();
+
   if (name) params.append("name", name);
   if (company) params.append("company", company);
   if (featured) params.append("featured", featured);
   if (sort) params.append("sort", sort);
-  if (fields) params.append("fields", fields);
-  if (numericFilters) params.append("numericFilters", numericFilters);
+
+  let numericFilters = [];
+  if (priceMin) numericFilters.push(`price>=${priceMin}`);
+  if (priceMax) numericFilters.push(`price<=${priceMax}`);
+  if (numericFilters.length > 0) {
+    params.append("numericFilters", numericFilters.join(","));
+  }
+
   params.append("page", page);
   params.append("limit", limit);
 
@@ -64,7 +71,7 @@ function renderProducts(list) {
       <p>💰 $${p.price}</p>
       <p>🏭 ${p.company}</p>
       <p>⭐ ${p.rating}</p>
-      <p>🌟 Featured: ${p.featured}</p>
+      <p>🌟 Featured: ${p.featured ? "Show" : "Hide"}</p>
     `;
     container.appendChild(div);
   });
@@ -75,7 +82,11 @@ async function updatePaginationInfo(dataNow) {
   const itemsThisPage = (dataNow.products || []).length;
 
   const totalFromApi =
-    dataNow.total ?? dataNow.totalDocs ?? dataNow.count ?? dataNow.nbTotal ?? null;
+    dataNow.total ??
+    dataNow.totalDocs ??
+    dataNow.count ??
+    dataNow.nbTotal ??
+    null;
 
   const start = itemsThisPage > 0 ? (currentPage - 1) * limit + 1 : 0;
   const end = itemsThisPage > 0 ? start + itemsThisPage - 1 : 0;
@@ -102,7 +113,9 @@ async function updatePaginationInfo(dataNow) {
   paginationInfo.textContent =
     totalFromApi != null
       ? `Showing ${start}–${end} of ${totalFromApi}`
-      : (itemsThisPage > 0 ? `Showing ${start}–${end}` : "");
+      : itemsThisPage > 0
+      ? `Showing ${start}–${end}`
+      : "";
 
   prevBtn.disabled = !hasPrev;
   nextBtn.disabled = !hasNext;

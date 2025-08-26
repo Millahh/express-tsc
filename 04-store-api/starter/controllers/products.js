@@ -17,6 +17,7 @@ const getAllProductsStatic = async (req, res) => {
   // u can use express-async-error package as well
   // throw new Error('testing async errors')
 };
+
 const getAllProducts = async (req, res) => {
   const { featured, company, name, sort, fields, numericFilters } = req.query;
   const queryObject = {};
@@ -29,6 +30,30 @@ const getAllProducts = async (req, res) => {
   }
   if (name) {
     queryObject.name = { $regex: name, $options: "i" };
+  }
+
+  // numericFilters
+  if (numericFilters) {
+    const operatorMap = {
+      ">": "$gt", //greater than
+      ">=": "$gte", //greater than equal
+      "=": "$eq", //equal
+      "<": "$lt", //less than
+      "<=": "$lte", //less than equal
+    };
+    const regEx = /\b(<|>|>=|=|<|<=)\b/g;
+    let filters = numericFilters.replace(
+      regEx,
+      (match) => `—${operatorMap[match]}—`
+    );
+    const options = ["price"];
+    filters.split(",").forEach((item) => {
+      const [field, operator, value] = item.split("—");
+      if (options.includes(field)) {
+        if (!queryObject[field]) queryObject[field] = {};
+        queryObject[field][operator] = Number(value);
+      }
+    });
   }
 
   let result = Product.find(queryObject);
@@ -46,29 +71,6 @@ const getAllProducts = async (req, res) => {
   if (fields) {
     const fieldsList = fields.split(",").join(" ");
     result = result.select(fieldsList);
-  }
-
-  // numericFilters
-  if (numericFilters) {
-    const operatorMap = {
-      ">": "$gt", //greater than
-      ">=": "$gte", //greater than equal
-      "=": "$eq", //equal
-      "<": "$lt", //less than
-      "<=": "$lte", //less than equal
-    };
-    const regEx = /\b(<|>|>=|=|<|<=)\b/g;
-    let filters = numericFilters.replace(
-      regEx,
-      (match) => `—${operatorMap[match]}—`
-    );
-    const options = ["price", "rating"];
-    filters = filters.split(",").forEach((item) => {
-      const [field, operator, value] = item.split("—");
-      if (options.includes(field)) {
-        queryObject[field] = { [operator]: Number(value) };
-      }
-    });
   }
 
   const page = Number(req.query.page) || 1;
