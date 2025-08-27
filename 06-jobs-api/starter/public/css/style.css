@@ -11,8 +11,9 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   color: #333;
+  padding: 20px;
 }
 
 /* Card container */
@@ -22,7 +23,7 @@ body {
   border-radius: 16px;
   box-shadow: 0 8px 25px rgba(0,0,0,0.15);
   width: 100%;
-  max-width: 400px;
+  max-width: 1000px; /* lebih lebar biar muat job list 2 kolom */
   animation: fadeIn 0.4s ease-in-out;
 }
 
@@ -80,20 +81,47 @@ a:hover {
 
 /* Job list (dashboard) */
 #jobsList {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 kolom */
+  gap: 16px;
   list-style: none;
   padding: 0;
   margin-top: 1.5rem;
+  max-height: 400px;   /* tinggi dibatasi */
+  overflow-y: auto;    /* ada scroll kalau kepanjangan */
+  padding-right: 8px;  /* biar scrollbar nggak nutup konten */
+}
+
+/* Scrollbar custom biar rapi */
+#jobsList::-webkit-scrollbar {
+  width: 8px;
+}
+#jobsList::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 10px;
+}
+#jobsList::-webkit-scrollbar-thumb {
+  background: #bbb;
+  border-radius: 10px;
+}
+#jobsList::-webkit-scrollbar-thumb:hover {
+  background: #999;
 }
 
 #jobsList li {
   background: #f8f9ff;
-  margin: 0.6rem 0;
-  padding: 0.8rem 1rem;
+  padding: 1rem;
   border-radius: 12px;
   display: flex;
+  flex-direction: column; /* biar text & tombol rapi ke bawah */
   justify-content: space-between;
-  align-items: center;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#jobsList li strong {
+  font-size: 1.05rem;
+  color: #333;
+  margin-bottom: 4px;
 }
 
 #jobsList li:hover {
@@ -101,15 +129,16 @@ a:hover {
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
-/* Action buttons */
+/* Action buttons dalam card */
 #jobsList button {
-  margin-left: 0.4rem;
-  padding: 0.35rem 0.7rem;
+  margin-top: 8px;
+  padding: 0.4rem 0.7rem;
   border: none;
   border-radius: 6px;
   cursor: pointer;
   font-size: 0.85rem;
   transition: all 0.2s ease;
+  width: 100%;
 }
 
 #jobsList button:first-of-type {
@@ -130,13 +159,20 @@ a:hover {
 
 /* Logout button */
 #logoutBtn {
-  margin-top: 1.2rem;
+  margin-top: 1.5rem;
   width: 100%;
   background: #222;
   color: #fff;
 }
 #logoutBtn:hover {
   background: #000;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  #jobsList {
+    grid-template-columns: 1fr; /* HP jadi 1 kolom */
+  }
 }
 
 /* Animasi */
