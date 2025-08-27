@@ -1,0 +1,146 @@
+/* Reset & base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #74ABE2, #5563DE);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: #333;
+}
+
+/* Card container */
+.container {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  width: 100%;
+  max-width: 400px;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #222;
+}
+
+/* Form elements */
+form input, form select, form button {
+  width: 100%;
+  margin: 0.6rem 0;
+  padding: 0.75rem;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+form input:focus, form select:focus {
+  border-color: #5563DE;
+  outline: none;
+  box-shadow: 0 0 6px rgba(85,99,222,0.3);
+}
+
+button {
+  background: #5563DE;
+  color: white;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+
+button:hover {
+  background: #3f4ac2;
+}
+
+.error-msg {
+  color: #e74c3c;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+/* Links */
+a {
+  color: #5563DE;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* Job list (dashboard) */
+#jobsList {
+  list-style: none;
+  padding: 0;
+  margin-top: 1.5rem;
+}
+
+#jobsList li {
+  background: #f8f9ff;
+  margin: 0.6rem 0;
+  padding: 0.8rem 1rem;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.2s ease;
+}
+
+#jobsList li:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* Action buttons */
+#jobsList button {
+  margin-left: 0.4rem;
+  padding: 0.35rem 0.7rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+}
+
+#jobsList button:first-of-type {
+  background: #f39c12;
+  color: white;
+}
+#jobsList button:first-of-type:hover {
+  background: #d68910;
+}
+
+#jobsList button:last-of-type {
+  background: #e74c3c;
+  color: white;
+}
+#jobsList button:last-of-type:hover {
+  background: #c0392b;
+}
+
+/* Logout button */
+#logoutBtn {
+  margin-top: 1.2rem;
+  width: 100%;
+  background: #222;
+  color: #fff;
+}
+#logoutBtn:hover {
+  background: #000;
+}
+
+/* Animasi */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jobs Dashboard</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Your Jobs</h2>
+    <form id="jobForm">
+      <input type="hidden" name="jobId" /> <!-- untuk edit -->
+      <input type="text" name="company" placeholder="Company" required />
+      <input type="text" name="position" placeholder="Position" required />
+      <select name="status">
+        <option value="pending">Pending</option>
+        <option value="interview">Interview</option>
+        <option value="declined">Declined</option>
+      </select>
+      <button type="submit">Save Job</button>
+      <p id="jobError" class="error-msg"></p>
+    </form>
+
+    <ul id="jobsList"></ul>
+    <button id="logoutBtn">Logout</button>
+  </div>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
