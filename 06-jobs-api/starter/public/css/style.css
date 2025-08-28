@@ -1,4 +1,3 @@
-/* Reset & base */
 * {
   margin: 0;
   padding: 0;
@@ -7,24 +6,31 @@
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #74ABE2, #5563DE);
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
   color: #333;
   padding: 20px;
+  background: linear-gradient(135deg, #74ABE2, #5563DE);
 }
 
-/* Card container */
 .container {
   background: #fff;
   padding: 2rem;
   border-radius: 16px;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-  width: 100%;
-  max-width: 1000px; /* lebih lebar biar muat job list 2 kolom */
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  width: 90%;
+  max-width: 450px;
+  margin: 0 auto;
   animation: fadeIn 0.4s ease-in-out;
+}
+
+@media (min-width: 1024px) {
+  .container {
+    width: 35%;
+    max-width: none;
+  }
 }
 
 h2 {
@@ -33,21 +39,22 @@ h2 {
   color: #222;
 }
 
-/* Form elements */
-form input, form select, form button {
+form input,
+form select,
+form button {
   width: 100%;
   margin: 0.6rem 0;
   padding: 0.75rem;
   border-radius: 10px;
   border: 1px solid #ddd;
   font-size: 1rem;
-  transition: all 0.2s ease;
 }
 
-form input:focus, form select:focus {
+form input:focus,
+form select:focus {
   border-color: #5563DE;
   outline: none;
-  box-shadow: 0 0 6px rgba(85,99,222,0.3);
+  box-shadow: 0 0 6px rgba(85, 99, 222, 0.3);
 }
 
 button {
@@ -56,7 +63,6 @@ button {
   border: none;
   font-weight: bold;
   cursor: pointer;
-  transition: background 0.25s ease;
 }
 
 button:hover {
@@ -66,117 +72,112 @@ button:hover {
 .error-msg {
   color: #e74c3c;
   font-size: 0.9rem;
-  margin-top: 0.5rem;
   text-align: center;
 }
 
-/* Links */
-a {
-  color: #5563DE;
-  text-decoration: none;
-}
-a:hover {
-  text-decoration: underline;
-}
-
-/* Job list (dashboard) */
+/* Job List */
 #jobsList {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2 kolom */
-  gap: 16px;
   list-style: none;
   padding: 0;
   margin-top: 1.5rem;
-  max-height: 400px;   /* tinggi dibatasi */
-  overflow-y: auto;    /* ada scroll kalau kepanjangan */
-  padding-right: 8px;  /* biar scrollbar nggak nutup konten */
-}
-
-/* Scrollbar custom biar rapi */
-#jobsList::-webkit-scrollbar {
-  width: 8px;
-}
-#jobsList::-webkit-scrollbar-track {
-  background: #f0f0f0;
-  border-radius: 10px;
-}
-#jobsList::-webkit-scrollbar-thumb {
-  background: #bbb;
-  border-radius: 10px;
-}
-#jobsList::-webkit-scrollbar-thumb:hover {
-  background: #999;
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 8px;
 }
 
 #jobsList li {
   background: #f8f9ff;
   padding: 1rem;
   border-radius: 12px;
+  margin-bottom: 1rem;
   display: flex;
-  flex-direction: column; /* biar text & tombol rapi ke bawah */
   justify-content: space-between;
+  align-items: center;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-#jobsList li strong {
-  font-size: 1.05rem;
-  color: #333;
-  margin-bottom: 4px;
 }
 
 #jobsList li:hover {
   transform: translateY(-3px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-/* Action buttons dalam card */
-#jobsList button {
-  margin-top: 8px;
-  padding: 0.4rem 0.7rem;
+.job-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.job-company {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.job-position {
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: #555;
+  margin-top: 2px;
+}
+
+.job-status {
+  font-size: 0.8rem;
+  font-weight: bold;
+  padding: 4px 10px;
+  border-radius: 12px;
+  margin-top: 4px;
+  display: inline-block;
+}
+
+.job-status.pending {
+  background: #fff3e0;
+  color: #e67e22;
+}
+
+.job-status.interview {
+  background: #e8f4fd;
+  color: #3498db;
+}
+
+.job-status.declined {
+  background: #fdecea;
+  color: #e74c3c;
+}
+
+.job-status.accepted {
+  background: #e5ffde;;
+  color: #2ac200;
+}
+
+/* Action icons on right */
+.job-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.job-actions button {
+  background: #eee;
   border: none;
   border-radius: 6px;
+  padding: 6px;
   cursor: pointer;
-  font-size: 0.85rem;
-  transition: all 0.2s ease;
-  width: 100%;
+  font-size: 0.9rem;
+  color: #555;
 }
 
-#jobsList button:first-of-type {
-  background: #f39c12;
-  color: white;
-}
-#jobsList button:first-of-type:hover {
-  background: #d68910;
+.job-actions button:hover {
+  background: #ddd;
+  color: #000;
 }
 
-#jobsList button:last-of-type {
-  background: #e74c3c;
-  color: white;
-}
-#jobsList button:last-of-type:hover {
-  background: #c0392b;
-}
-
-/* Logout button */
+/* Logout */
 #logoutBtn {
   margin-top: 1.5rem;
   width: 100%;
   background: #222;
   color: #fff;
 }
+
 #logoutBtn:hover {
   background: #000;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  #jobsList {
-    grid-template-columns: 1fr; /* HP jadi 1 kolom */
-  }
-}
-
-/* Animasi */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
 }
