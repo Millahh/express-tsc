@@ -1,12 +1,12 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
 
-const {
+import {
   getAllProducts,
   getAllProductsStatic,
-} = require("../controllers/products");
+} from "../controllers/products";
 
 router.route("/").get(getAllProducts);
 router.route("/static").get(getAllProductsStatic);
 
-module.exports = router;
+export default router;
