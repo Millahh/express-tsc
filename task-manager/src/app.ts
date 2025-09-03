@@ -4,6 +4,7 @@ import connectDB from './db/connect'
 import dotenv from 'dotenv';
 import notFound from './middleware/not-found'
 import errorHandlerMiddleware from './middleware/error-handler'
+import path from 'path'
 
 //Load env vars
 dotenv.config();
@@ -11,7 +12,7 @@ dotenv.config();
 const app:Application = express()
 
 // middleware
-app.use(express.static('./public'))
+app.use(express.static(path.join(__dirname, '../public')))
 app.use(express.json())
  
 // routes
@@ -23,7 +24,7 @@ const port = process.env.PORT || 3000
 
 const start = async (): Promise<void> => {
     try{
-        await connectDB(process.env.MONGO_URI)
+        await connectDB(process.env.MONGO_URI!);
         app.listen(port, () => console.log(`Server is listening on port ${port}`)) 
     } catch (error) {
         console.log(error)

@@ -18,11 +18,12 @@ const connect_1 = __importDefault(require("./db/connect"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const not_found_1 = __importDefault(require("./middleware/not-found"));
 const error_handler_1 = __importDefault(require("./middleware/error-handler"));
+const path_1 = __importDefault(require("path"));
 //Load env vars
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 // middleware
-app.use(express_1.default.static('./public'));
+app.use(express_1.default.static(path_1.default.join(__dirname, '../public')));
 app.use(express_1.default.json());
 // routes
 app.use('/api/v1/tasks', tasks_1.default);
