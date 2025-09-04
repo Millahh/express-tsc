@@ -4,8 +4,7 @@ import { StatusCodes } from 'http-status-codes'
 
 class BadRequest extends CustomAPIError {
   constructor(message: string) {
-    super(message);
-    this.statusCode = StatusCodes.BAD_REQUEST;
+    super(message, StatusCodes.BAD_REQUEST);
   }
 }
 

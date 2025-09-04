@@ -2,14 +2,7 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 import { UnauthenticatedError } from "../errors";
 import { Request, Response, NextFunction } from "express";
 
-interface AuthenticatedRequest extends Request {
-  user?: {
-    id: string;
-    username: string;
-  }
-}
-
-const authenticationMiddleware = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+const authenticationMiddleware = async (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization
 
   if (!authHeader || !authHeader.startsWith('Bearer ')) {

@@ -1,9 +1,10 @@
 class CustomAPIError extends Error {
-  statusCode?: number; // optional, so child classes can set it
+  statusCode: number;
 
-  constructor(message: string) {
+  constructor(message: string, statusCode: number) {
     super(message);
     this.name = this.constructor.name; 
+     this.statusCode = statusCode;
     Object.setPrototypeOf(this, new.target.prototype); 
   }
 }

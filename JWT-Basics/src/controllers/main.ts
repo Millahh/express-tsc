@@ -2,13 +2,6 @@ import jwt from "jsonwebtoken";
 import { BadRequestError } from "../errors";
 import { Request, Response } from "express";
 
-interface AuthenticatedRequest extends Request {
-  user: {
-    id: string;
-    username: string;
-  }
-}
-
 const login = async (req: Request, res: Response): Promise<void> => {
   const { username, password } = req.body;
 
@@ -24,7 +17,13 @@ const login = async (req: Request, res: Response): Promise<void> => {
   res.status(200).json({ msg: "user created", token });
 };
 
-const dashboard = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+const dashboard = async (req: Request, res: Response): Promise<void> => {
+  // type guard: make sure req.user is defined
+  if (!req.user) {
+    res.status(401).json({ msg: "Not authorized to access this route" });
+    return;
+  }
+
   const luckyNumber = Math.floor(Math.random() * 100);
 
   res.status(200).json({
