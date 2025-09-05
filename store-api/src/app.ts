@@ -6,10 +6,36 @@ import connectDB from "./db/connect";
 import notFoundMiddleware from "./middleware/not-found";
 import errorMiddleware from "./middleware/error-handler";
 import path from 'path'
+// extra security packages
+import helmet from 'helmet'
+import cors from 'cors'
+import xssClean from "xss-clean";
+import rateLimit from 'express-rate-limit'
 
-// load env var
-dotenv.config()
-const app: Application = express()
+//Load env var
+dotenv.config();
+const app:Application = express()
+
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "blob:"],
+      workerSrc: ["'self'", "blob:"],
+    },
+  })
+);
+
+// extra security
+app.set('trust proxy', 1)
+app.use(rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100 // limit each IP to 100 requests per windowMs
+}))
+app.use(express.json());
+app.use(helmet())
+app.use(cors())
+app.use(xssClean());
 
 // middleware
 app.use(express.static(path.join(__dirname, "../public")));
