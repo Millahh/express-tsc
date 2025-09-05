@@ -1,6 +1,7 @@
 import express, { Application } from 'express'
 import dotenv from 'dotenv'
 import 'express-async-errors';
+import path from 'path'
 
 // extra security packages
 import helmet from 'helmet'
@@ -33,6 +34,9 @@ app.use(express.json());
 app.use(helmet())
 app.use(cors())
 app.use(xssClean());
+
+app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.json());
 
 // routes
 app.use('/api/v1/auth', authRouter)

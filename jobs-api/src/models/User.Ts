@@ -50,7 +50,7 @@ UserSchema.methods.createJWT = function () {
     throw new Error("JWT_SECRET or JWT_LIFETIME is not defined");
   }
 
-  const options: SignOptions = { expiresIn: Number(lifetime) };
+  const options: SignOptions = { expiresIn: lifetime };
 
   return jwt.sign({ userId: this._id, name: this.name }, secret, options);
 };
